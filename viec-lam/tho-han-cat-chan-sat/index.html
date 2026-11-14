@@ -434,11 +434,7 @@ function svDoc(hop){
     else if (loai === 'nhieu') { t = [].map.call(li.querySelectorAll('input[type=checkbox]:checked'), function(x){ return x.value; }).join(', '); var ko = li.querySelector('.sv-khac'), kh = ko ? ko.value.trim() : ''; if (kh) t += (t ? ', ' : '') + 'Khác: ' + kh; if (!t) loi = 'Bạn chọn ít nhất 1 ý (hoặc ghi vào ô Khác) nhé.'; }
     else {
       t = li.querySelector('.sv-o').value.trim();
-      var chu = t.replace(/[^A-Za-zÀ-ỹ]/g, '').length, tu = t.split(/\s+/).filter(Boolean).length;
       if (!t) loi = 'Bạn chưa trả lời câu này.';
-      else if (/^(luong|lcung)$/.test(id) && !/\d/.test(t)) loi = 'Bạn ghi con số cụ thể nhé, ví dụ: 15 – 20 triệu.';
-      else if (loai === 'dai' && (tu < 4 || chu < 12)) loi = 'Câu trả lời còn ngắn quá. Bạn viết rõ hơn một chút, ít nhất 1 câu đầy đủ nhé.';
-      else if (loai === 'ngan' && !/^(luong|lcung)$/.test(id) && chu < 2 && !/\d/.test(t)) loi = 'Câu trả lời chưa rõ, bạn ghi lại giúp nhé.';
     }
     var cu = li.querySelector('.sv-loi'); if (cu) cu.remove(); li.classList.remove('sv-sai');
     if (loi) { sai.push(li); if (!thieu) thieu = li; li.classList.add('sv-sai'); var p = document.createElement('p'); p.className = 'sv-loi'; p.textContent = '⚠ ' + loi; li.querySelector('.sv-h').after(p); }
@@ -483,7 +479,7 @@ document.querySelectorAll('form.nop').forEach(function(f){
     sn.addEventListener('click', function(){
       var r = svDoc(hop);
       sb.hidden = false; sb.className = 'bao loi';
-      if (r.thieu) { sb.textContent = '⚠ Còn ' + r.sai.length + ' câu cần điền lại (đã tô đỏ). Đang đưa bạn đến câu đầu tiên…'; r.thieu.scrollIntoView({block: 'center', behavior: 'smooth'}); var x = r.thieu.querySelector('textarea,.sv-o,input'); if (x) x.focus({preventScroll: true}); return; }
+      if (r.thieu) { sb.textContent = '⚠ Còn ' + r.sai.length + ' câu chưa trả lời (đã tô đỏ). Đang đưa bạn đến câu đầu tiên…'; r.thieu.scrollIntoView({block: 'center', behavior: 'smooth'}); var x = r.thieu.querySelector('textarea,.sv-o,input'); if (x) x.focus({preventScroll: true}); return; }
       sb.hidden = true;
       if (!hop.dataset.xacNhan) {
         var xn = document.createElement('div'); xn.className = 'sv-xn';
