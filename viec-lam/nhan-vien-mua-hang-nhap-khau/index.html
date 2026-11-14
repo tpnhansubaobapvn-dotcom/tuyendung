@@ -369,13 +369,23 @@ var SV = {
     {id: 'noi', h: 'Bạn đi làm được ở kho nào?', loai: 'chon', opts: ['Tân Đông Hiệp (Dĩ An)', 'Quốc lộ 13 (Lái Thiêu)', 'Chỗ nào cũng được']}
   ].concat(SV_CHUNG),
   kd: [
+    {id: 'gt', h: 'Bạn giới thiệu ngắn gọn về bản thân và quá trình làm việc trước đây nhé.', loai: 'dai'},
     {id: 'kn', h: 'Bạn có bao nhiêu năm kinh nghiệm bán hàng B2B (bán cho doanh nghiệp, công trình, nhà máy)?', loai: 'chon', opts: ['Chưa có', 'Dưới 1 năm', '1–2 năm', 'Trên 2 năm']},
+    {id: 'cvgn', h: 'Công việc gần nhất của bạn thuộc lĩnh vực gì? Bạn làm ở đó bao lâu?', loai: 'ngan', goiY: 'Ví dụ: bán thép hình cho nhà xưởng, 2 năm'},
     {id: 'nganh', h: 'Bạn đã bán hàng ngành nào?', loai: 'nhieu', opts: ['Vật tư công nghiệp', 'Sắt thép, kim khí', 'Cơ khí, thiết bị'], khac: true},
+    {id: 'nguon', h: 'Bạn thường tìm khách hàng từ đâu? Khách của bạn là cá nhân hay doanh nghiệp?', loai: 'ngan', goiY: 'Ví dụ: tự tìm công trình, khách cũ giới thiệu, chủ yếu doanh nghiệp'},
     {id: 'ds', h: 'Doanh số cao nhất bạn từng đạt được trong một tháng là bao nhiêu? Bán sản phẩm gì?', loai: 'ngan', goiY: 'Ví dụ: 800 triệu, bán thép tấm cho nhà xưởng'},
+    {id: 'don', h: 'Đơn hàng lớn nhất bạn từng chốt là bao nhiêu tiền? Bán cho ai, sản phẩm gì?', loai: 'ngan'},
+    {id: 'nghi', h: 'Vì sao bạn nghỉ (hoặc muốn nghỉ) công việc gần nhất?', loai: 'ngan'},
     {id: 'pm', h: 'Bạn có dùng phần mềm bán hàng, quản lý khách hàng (CRM) không? Phần mềm tên gì?', loai: 'ngan', goiY: 'Ví dụ: MISA AMIS CRM, Base, Excel…'},
-    SV_CHUNG[0], SV_CHUNG[1], SV_CHUNG[2],
-    {id: 'th', h: 'Tình huống: khách đòi chiết khấu 5% ngoài chính sách, bạn xử lý thế nào? (2–3 câu)', loai: 'dai'}
-  ].concat(SV_CUOI),
+    {id: 'hoc', h: 'Bạn có sẵn sàng học kiến thức kỹ thuật về dây cáp thép, xích và thiết bị nâng hạ không?', loai: 'chon', opts: ['Sẵn sàng', 'Sẵn sàng nhưng cần thời gian', 'Chưa muốn']},
+    {id: 'kn3', h: 'Theo bạn, để chốt được đơn hàng lớn cần những kỹ năng gì?', loai: 'dai'},
+    {id: 'buoc', h: 'Bạn đã tiếp cận được một khách lớn và biết họ có đơn giá trị cao. Bạn sẽ làm gì tiếp theo? Kể từng bước.', loai: 'dai'},
+    {id: 'che', h: 'Khách chê "giá cao quá em ơi, không mua được". Bạn ứng biến thế nào?', loai: 'dai'},
+    {id: 'th', h: 'Khách đòi giảm 10% mới chốt đơn. Bạn xử lý thế nào? (2–3 câu)', loai: 'dai'},
+    {id: 'cg', h: 'Theo bạn, một chuyên gia kinh doanh giỏi là người như thế nào?', loai: 'dai'},
+    SV_CHUNG[0], SV_CHUNG[1], SV_CHUNG[2], SV_CUOI[0], SV_CUOI[2]
+  ],
   kho: [KN, {id: 'cm', h: 'Bạn đã làm những việc gì ở kho? (nhập xuất, kiểm kê, xe nâng, giao nhận, phần mềm kho…)', loai: 'ngan'}].concat(SV_CHUNG, [{id: 'th', h: 'Tình huống: kiểm kê thấy thiếu hàng so với phần mềm, bạn xử lý thế nào? (2–3 câu)', loai: 'dai'}], SV_CUOI),
   vt: [
     {id: 'ct', h: 'Bạn đã từng làm mua hàng ở những công ty nào (ngành gì) và trong thời gian bao lâu?', loai: 'dai'},
@@ -400,7 +410,7 @@ SV.kdbl = SV.kd;
 var NHAN = {kdbl: 'Trưởng nhóm Kinh doanh An Lộc – Bình Long và Giám đốc', kd: 'Trưởng phòng Kinh doanh', kho: 'Trưởng bộ phận Kho', vt: 'Trưởng phòng Vật tư', kt: 'Phòng Kế toán', hcns: 'Phòng Hành chính nhân sự', mkt: 'Bộ phận Marketing', gc: 'Trưởng bộ phận Gia công cơ khí và Giám đốc'};
 function svHtml(k, vt){
   var ds = (k === 'gc' && /Trưởng/i.test(vt)) ? SV.gctr : (SV[k] || SV.kho);
-  return '<div class="sv-hop" role="dialog" aria-modal="true" aria-labelledby="sv-td"><div class="sv-the"><img class="sv-logo" src="/img/0.jpg" alt="CAPVINA" width="122" height="40"><p class="sv-eb">Bước 2/2 · gần xong rồi!</p><h2 id="sv-td">Sơ vấn khi nộp CV</h2><p class="sv-mo">Giúp chúng tôi hiểu bạn hơn. Vị trí: <b>' + vt + '</b>. Câu trả lời đi cùng CV đến thẳng ' + (NHAN[k] || 'trưởng bộ phận') + '.</p><ol class="sv-ds">' +
+  return '<div class="sv-hop" role="dialog" aria-modal="true" aria-labelledby="sv-td"><div class="sv-the"><img class="sv-logo" src="/img/0.jpg" alt="CAPVINA" width="122" height="40"><p class="sv-eb">Bước 2/2 · gần xong rồi!</p><h2 id="sv-td">Sơ vấn khi nộp CV</h2><p class="sv-mo">Bạn cứ tự nhiên trả lời theo những gì mình nghĩ, viết ngắn cũng được, không cần suy nghĩ quá sâu hay viết cho thật hay. Cảm ơn bạn đã dành vài phút chia sẻ: những thông tin này giúp chúng tôi hiểu bạn hơn, để hai bên ngày càng dễ đến gần nhau hơn.</p><p class="sv-mo">Vị trí: <b>' + vt + '</b>. Câu trả lời đi cùng CV đến thẳng ' + (NHAN[k] || 'trưởng bộ phận') + '.</p><ol class="sv-ds">' +
     ds.map(function(q){
       var o = '<li data-id="' + q.id + '" data-loai="' + q.loai + '"><p class="sv-h">' + q.h + '</p>';
       if (q.loai === 'chon') o += '<div class="sv-chon">' + q.opts.map(function(x){ return '<label><input type="radio" name="sv-' + q.id + '" value="' + x + '"> ' + x + '</label>'; }).join('') + '</div>';
