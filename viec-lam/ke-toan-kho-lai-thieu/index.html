@@ -419,9 +419,29 @@ var SV = {
   mkt: [KN, {id: 'cm', h: 'Bạn thành thạo những công cụ nào? (Canva, CapCut, quảng cáo Facebook, SEO…)', loai: 'ngan'}].concat(SV_CHUNG, [{id: 'th', h: 'Tình huống: bài đăng tuyển dụng ít người xem, bạn sẽ làm gì? (2–3 câu)', loai: 'dai'}], SV_CUOI)
 };
 SV.kdbl = SV.kd;
+var VT_TN = [
+  {id: 'tn1', h: 'Khi nhận yêu cầu mua một mặt hàng mà bạn chưa từng mua, bạn sẽ bắt đầu từ đâu và thực hiện như thế nào? Làm thế nào để xác minh nhà cung cấp đó có uy tín hay không?', loai: 'dai'},
+  {id: 'tn2', h: 'Khi nhận hàng không đúng quy cách hoặc sai thông số kỹ thuật so với đơn đặt hàng, bạn sẽ giải quyết ra sao để vẫn bảo đảm tiến độ giao hàng và vẫn đúng hàng?', loai: 'dai'},
+  {id: 'tn3', h: 'Xích neo có giá trị lớn, kích thước cồng kềnh và giá biến động mạnh theo giá thép thế giới. Làm thế nào để bạn vừa luôn có sẵn vật tư thay thế khi tàu vào cảng đột xuất, vừa không làm đọng vốn quá nhiều ở kho công ty?', loai: 'dai'},
+  {id: 'tn4', h: 'Nếu nhà cung cấp quen thuộc liên tục báo giá cao hơn thị trường, với lý do giá thép tăng, chi phí kiểm định cao, bạn sẽ dùng những cách gì để vẫn đàm phán giảm được chi phí cho công ty?', loai: 'dai'},
+  {id: 'tn5', h: 'Theo bạn, một nhân viên mua hàng giỏi cần tạo ra giá trị gì cho công ty?', loai: 'dai'},
+  {id: 'tn6', h: 'Bạn là người đi mua hàng thương mại cho công ty khi có đơn hàng phát sinh từ phòng kinh doanh. Theo bạn, khi giao tiếp với nhà cung cấp, bạn nên ở cương vị người có quyền tự mua, tự bán (vừa là kinh doanh, vừa là mua hàng), hay chỉ ở cương vị người thuần đi mua? Tại sao?', loai: 'dai'},
+  {id: 'tn7', h: 'Bạn đi mua món hàng A cho công ty. Món hàng này bạn biết rất rõ, gần như 90–95%. Bạn đã xác định được nhà cung cấp cần mua, nhưng cần làm rõ các thông số trước khi chốt mua. Theo bạn, nên lấy báo giá và trả giá trước khi đo đạc, nghiệm thu thực tế, hay nghiệm thu, đo đạc rồi mới trả giá? Tại sao?', loai: 'dai'}
+];
+var VT_NN = [
+  {id: 'nn1', h: 'Bạn thẩm định nhà cung cấp nước ngoài là công ty thương mại hay nhà sản xuất bằng cách nào? Làm thế nào để biết nhà cung cấp đó có uy tín hay không?', loai: 'dai'},
+  {id: 'nn2', h: 'Bạn thường mua hàng theo điều kiện nào (EXW, FOB, CIF…)? Nếu mua theo giá FOB thì có thuận lợi và bất lợi gì? Nếu mua theo giá CIF thì có thuận lợi và bất lợi gì?', loai: 'dai'},
+  {id: 'nn3', h: 'Bạn từng dùng những phương thức thanh toán nào (T/T, L/C…)? Thanh toán trước hay sau khi giao hàng, mỗi cách có rủi ro gì? Với nhà cung cấp mới, bạn đề xuất điều kiện thanh toán thế nào?', loai: 'dai'},
+  {id: 'nn4', h: 'Bạn thường làm thế nào để thương lượng giảm giá với nhà cung cấp và có được giá tối ưu nhất cho một đơn hàng?', loai: 'dai'},
+  {id: 'nn5', h: 'Hàng về bị lỗi, thiếu hoặc sai so với đơn hàng đã đặt, bạn xử lý thế nào?', loai: 'dai'},
+  {id: 'nn6', h: 'Bộ chứng từ nhập khẩu gồm những chứng từ gì? Chứng từ nào quan trọng nhất?', loai: 'dai'}
+];
+SV.vttn = SV.vt.slice(0, 6).concat(VT_TN, SV.vt.slice(6));
+SV.vtnn = SV.vt.slice(0, 6).concat(VT_NN, SV.vt.slice(6));
 var NHAN = {kdbl: 'Trưởng nhóm Kinh doanh An Lộc – Bình Long và Giám đốc', kd: 'Trưởng phòng Kinh doanh', kho: 'Trưởng bộ phận Kho', vt: 'Trưởng phòng Vật tư', kt: 'Giám đốc', hcns: 'Phòng Hành chính nhân sự', mkt: 'Bộ phận Marketing', gc: 'Trưởng bộ phận Gia công cơ khí và Giám đốc'};
 function svHtml(k, vt){
   var ds = (k === 'gc' && /Trưởng/i.test(vt)) ? SV.gctr : (SV[k] || SV.kho);
+  if (k === 'vt' && /nước ngoài|nhập khẩu/i.test(vt)) ds = SV.vtnn; else if (k === 'vt' && /trong nước/i.test(vt)) ds = SV.vttn;
   ds = ds.concat(SV_THEM.filter(function(q){ return !ds.some(function(x){ return x.id === q.id; }); }));
   return '<div class="sv-hop" role="dialog" aria-modal="true" aria-labelledby="sv-td"><div class="sv-the"><img class="sv-logo" src="/img/0.jpg" alt="CAPVINA" width="122" height="40"><p class="sv-eb">Bước 2/2 · gần xong rồi!</p><h2 id="sv-td">Sơ vấn khi nộp CV</h2><p class="sv-mo">Bạn cứ tự nhiên trả lời theo những gì mình nghĩ, viết ngắn cũng được, không cần suy nghĩ quá sâu hay viết cho thật hay. Cảm ơn bạn đã dành vài phút chia sẻ: những thông tin này giúp chúng tôi hiểu bạn hơn, để hai bên ngày càng dễ đến gần nhau hơn.</p><p class="sv-mo">Vị trí: <b>' + vt + '</b>. Câu trả lời đi cùng CV đến thẳng ' + (NHAN[k] || 'trưởng bộ phận') + '.</p><ol class="sv-ds">' +
     ds.map(function(q){
